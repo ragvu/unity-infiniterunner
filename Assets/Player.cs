@@ -10,15 +10,17 @@ public class Player : MonoBehaviour
     private Vector3 right;
     private bool leftTF;
     private bool rightTF;
-    private bool middleTF;
+    private bool middle1TF;
+    private bool middle2TF;
     public int health = 3;
     // Start is called before the first frame update
     void Start()
     {
         move = new Vector3(0f, 0f, 1f);
-        left = new Vector3(-3f, 0f, 0f);
-        right = new Vector3(3f, 0f, 0f);
-        middleTF = true;
+        left = new Vector3(-2f, 0f, 0f);
+        right = new Vector3(2f, 0f, 0f);
+        middle1TF = true;
+        middle2TF=false;
         leftTF = false;
         rightTF = false;
     }
@@ -30,30 +32,42 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxis("Vertical");
         transform.Translate(move * Time.deltaTime * 20);
 
-        if (Input.GetKeyDown("left") && middleTF)
+        if (Input.GetKeyDown("left") && middle1TF)
         {
             transform.Translate(left);
             leftTF = true;
-            middleTF = false;
+            middle1TF = false;
         }
-        else if (Input.GetKeyDown("right") && middleTF)
+        else if (Input.GetKeyDown("left") && middle2TF)
+        {
+            transform.Translate(left);
+            middle2TF=false;
+            middle1TF = true;
+        }
+        else if (Input.GetKeyDown("right") && middle2TF)
         {
             transform.Translate(right);
             rightTF = true;
-            middleTF = false;
+            middle2TF = false;
+        }
+        else if (Input.GetKeyDown("right") && middle1TF)
+        {
+            transform.Translate(right);
+            middle2TF = true;
+            middle1TF = false;
         }
         else if (Input.GetKeyDown("right") && leftTF)
         {
             transform.Translate(right);
             rightTF = false;
-            middleTF = true;
+            middle1TF = true;
             leftTF = false;
         }
         else if (Input.GetKeyDown("left") && rightTF)
         {
             transform.Translate(left);
             rightTF = false;
-            middleTF = true;
+            middle2TF = true;
             leftTF = false;
         }
     }
