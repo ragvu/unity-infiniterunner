@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     private bool middle1TF;
     private bool middle2TF;
     public int health = 3;
+    public Vector3 jump;
+    public float jumpForce =100.0f;
+    public bool isGrounded;
+    public Rigidbody playerLocal;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +27,7 @@ public class Player : MonoBehaviour
         middle2TF=false;
         leftTF = false;
         rightTF = false;
+        jump = new Vector3(0f, 5f, 0f);
     }
 
     // Update is called once per frame
@@ -32,19 +37,14 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxis("Vertical");
         transform.Translate(move * Time.deltaTime * 20);
 
-        if (Input.GetKeyDown("left") && middle1TF)
+        if (Input.GetKeyDown("left") && middleTF && isGrounded)
         {
-            transform.Translate(left);
+            transform.position = Vector3.MoveTowards(transform.position, left, 20 * Time.deltaTime);
+            //transform.Translate(left * Time.deltaTime * 20);
             leftTF = true;
             middle1TF = false;
         }
-        else if (Input.GetKeyDown("left") && middle2TF)
-        {
-            transform.Translate(left);
-            middle2TF=false;
-            middle1TF = true;
-        }
-        else if (Input.GetKeyDown("right") && middle2TF)
+        else if (Input.GetKeyDown("right") && middleTF && isGrounded)
         {
             transform.Translate(right);
             rightTF = true;
@@ -56,24 +56,43 @@ public class Player : MonoBehaviour
             middle2TF = true;
             middle1TF = false;
         }
-        else if (Input.GetKeyDown("right") && leftTF)
+        else if (Input.GetKeyDown("right") && leftTF && isGrounded)
         {
             transform.Translate(right);
             rightTF = false;
             middle1TF = true;
             leftTF = false;
         }
-        else if (Input.GetKeyDown("left") && rightTF)
+        else if (Input.GetKeyDown("left") && rightTF && isGrounded)
         {
+            print("left from middle");
             transform.Translate(left);
             rightTF = false;
             middle2TF = true;
             leftTF = false;
         }
+
+        if (Input.GetKeyDown("space") && isGrounded)
+        {
+            print("jump");
+            playerLocal.AddForce(jump * jumpForce, ForceMode.Impulse);
+            isGrounded = false;
+        }
+
     }
 
     void DamagePlayer()
     {
         health--;
     }
+
+    private void OnCollisionStay(Collision other)
+    {
+        isGrounded = true;
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        isGrounded = false;
+    }
+
 }

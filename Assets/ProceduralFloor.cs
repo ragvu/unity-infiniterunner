@@ -24,7 +24,7 @@ public class ProceduralFloor : MonoBehaviour
         generateObstacleScript = playerLocal.GetComponent<GenerateObstacle>();
 
         anchorPoint = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 50f);
-        anchorPoint2 = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 150f);
+        anchorPoint2 = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 250f);
 
 
     }
