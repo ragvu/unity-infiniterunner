@@ -21,6 +21,6 @@ public class DamagePickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         playerScript.health--;
-        print(playerScript.health);
+        //print(playerScript.health);
     }
 }

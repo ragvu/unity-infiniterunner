@@ -6,21 +6,19 @@ public class CameraMovement : MonoBehaviour
 {
     public GameObject camera;
     private Vector3 move;
-    private GameObject playerLocal;
+    public GameObject playerLocal;
     private Player playerScript;
+    private int distance = 10;
+    private float cameraX;
     // Start is called before the first frame update
     void Start()
     {
-
-        playerLocal = GameObject.Find("Player");
-        playerScript = playerLocal.GetComponent<Player>();
-
-         move = new Vector3(0f, .4f, playerScript.transform.position.z);
+        cameraX = playerLocal.transform.position.x;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(move * Time.deltaTime * 10);
+        transform.position = new Vector3(cameraX, playerLocal.transform.position.y + 35, playerLocal.transform.position.z - 47);
     }
 }

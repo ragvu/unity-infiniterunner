@@ -21,9 +21,9 @@ public class GenerateObstacle : MonoBehaviour
         obstacleLocal = GameObject.Find("Obstacle");
         playerX = this.transform.transform.position.x;
         playerXi = Mathf.RoundToInt(playerX);
-        print(playerXi);
+        //print(playerXi);
         xSpawnA = new int[] { playerXi - 3, playerXi, playerXi + 3 };
-        print(xSpawnA[0]);
+        //print(xSpawnA[0]);
     }
 
     // Update is called once per frame
