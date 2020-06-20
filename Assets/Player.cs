@@ -14,17 +14,22 @@ public class Player : MonoBehaviour
     private bool middle2TF;
     public int health = 3;
     public Vector3 jump;
-    public float jumpForce =100.0f;
+    public float jumpForce = 100.0f;
     public bool isGrounded;
     public Rigidbody playerLocal;
+    public GenerateObstacle generateObstacleScript;
+    public int score = 0;
     // Start is called before the first frame update
     void Start()
     {
+
+        generateObstacleScript = playerLocal.GetComponent<GenerateObstacle>();
+
         move = new Vector3(0f, 0f, 1f);
-        left = new Vector3(-2f, 0f, 0f);
-        right = new Vector3(2f, 0f, 0f);
+        left = new Vector3(-3f, 0f, 0f);
+        right = new Vector3(3f, 0f, 0f);
         middle1TF = true;
-        middle2TF=false;
+        middle2TF = false;
         leftTF = false;
         rightTF = false;
         jump = new Vector3(0f, 5f, 0f);
@@ -37,20 +42,20 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxis("Vertical");
         transform.Translate(move * Time.deltaTime * 20);
 
-        if (Input.GetKeyDown("left") && middleTF && isGrounded)
+        if (Input.GetKeyDown("left") && middle1TF && isGrounded)
         {
-            transform.position = Vector3.MoveTowards(transform.position, left, 20 * Time.deltaTime);
-            //transform.Translate(left * Time.deltaTime * 20);
+            //transform.position = Vector3.MoveTowards(transform.position, left, 20 * Time.deltaTime);
+            transform.Translate(left);
             leftTF = true;
             middle1TF = false;
         }
-        else if (Input.GetKeyDown("right") && middleTF && isGrounded)
+        else if (Input.GetKeyDown("right") && middle2TF && isGrounded)
         {
             transform.Translate(right);
             rightTF = true;
             middle2TF = false;
         }
-        else if (Input.GetKeyDown("right") && middle1TF)
+        else if (Input.GetKeyDown("right") && middle1TF && isGrounded)
         {
             transform.Translate(right);
             middle2TF = true;
@@ -65,11 +70,20 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown("left") && rightTF && isGrounded)
         {
-            print("left from middle");
+            
             transform.Translate(left);
             rightTF = false;
             middle2TF = true;
             leftTF = false;
+        }
+        else if (Input.GetKeyDown("left") && middle2TF && isGrounded)
+        {
+
+            transform.Translate(left);
+            rightTF = false;
+            middle2TF = false;
+            leftTF = false;
+            middle1TF = true;
         }
 
         if (Input.GetKeyDown("space") && isGrounded)
@@ -88,11 +102,17 @@ public class Player : MonoBehaviour
 
     private void OnCollisionStay(Collision other)
     {
-        isGrounded = true;
+        if (other.gameObject.tag == "Floor")
+        {
+            isGrounded = true;
+        }
     }
     private void OnCollisionExit(Collision other)
     {
-        isGrounded = false;
+        if (other.gameObject.tag == "Floor")
+        {
+            isGrounded = false;
+        }
     }
 
 }

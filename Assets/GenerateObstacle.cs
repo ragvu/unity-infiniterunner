@@ -14,33 +14,29 @@ public class GenerateObstacle : MonoBehaviour
     public Rigidbody obstacle;
     private DamagePickup obstacleScript;
     public float zSpawn;
-    public int[] xSpawnA;
+    public float[] xSpawnA;
     private float playerX;
-    private int playerXi;
-    private int xSpawn;
+    private float xSpawn;
     private int playerhealth;
     private int score;
-
     private int typeOfObstacle;
     // private int obstacleType;
     private Vector3 obstacleSpawn;
     private Vector3 SphereSpawn;
     // Start is called before the first frame update
-    private bool fireObstacleSet = false;
-    private bool waterObstacleSet = false;
-    private bool earthObstacleSet = false;
+    public bool fireObstacleSet = false;
+    public bool waterObstacleSet = false;
+    public bool earthObstacleSet = false;
     private bool airObstacleSet = false;
-    private bool fireElem = false;
-    private bool waterElem = false;
-    private bool earthElem = false;
-    private bool airElem = false;
+    public bool fireElem = false;
+    public bool waterElem = false;
+    public bool earthElem = false;
+    public bool airElem = false;
     void Start()
     {
         obstacleLocal = GameObject.Find("Obstacle");
-        playerX = this.transform.transform.position.x;
-        playerXi = Mathf.RoundToInt(playerX);
-        print(playerXi);
-        xSpawnA = new int[] { playerXi - 3, playerXi - 1, playerXi + 1, playerXi + 3 };
+        playerX = this.transform.transform.position.x + 1.5f;
+        xSpawnA = new float[] { playerX - 4.5f, playerX - 1.5f, playerX + 1.5f, playerX + 4.5f};
         print(xSpawnA[0]);
     }
 
@@ -49,7 +45,7 @@ public class GenerateObstacle : MonoBehaviour
     {
 
     }
-    
+
     private void generateObstacle()
     {
         // int obstacleType = Random.Range(0, 3);
@@ -150,19 +146,23 @@ public class GenerateObstacle : MonoBehaviour
 
     public void SpawnObstacle()
     {
-        typeOfObstacle=Random.Range(1,4);
-        print("TYPE OF"+typeOfObstacle);
-        if(typeOfObstacle==1){
-            fireElem=true;
+        typeOfObstacle = Random.Range(1, 4);
+        print("TYPE OF" + typeOfObstacle);
+        if (typeOfObstacle == 1)
+        {
+            fireElem = true;
         }
-        else if(typeOfObstacle==2){
-            waterElem=true;
+        else if (typeOfObstacle == 2)
+        {
+            waterElem = true;
         }
-        else if(typeOfObstacle==3){
-            earthElem=true;
+        else if (typeOfObstacle == 3)
+        {
+            earthElem = true;
         }
-        else if(typeOfObstacle==4){
-            airElem=true;
+        else if (typeOfObstacle == 4)
+        {
+            airElem = true;
         }
         // List<int> obstacleNumbers = new List<int>();
 
@@ -179,27 +179,31 @@ public class GenerateObstacle : MonoBehaviour
             xSpawn = xSpawnA[i];
             // int obstacleType = Random.Range(0, 3);
             // print("Random number is " + obstacleType);
-            SphereSpawn=new Vector3(xSpawn,-2f,zSpawn);
+            SphereSpawn = new Vector3(xSpawn, 0f, zSpawn);
 
-            
-            int index = Random.Range(0,list.Count);
+
+            int index = Random.Range(0, list.Count);
             int str = list[index];
             print("------------" + str);
-            if(str==1){
-                Instantiate(Sphere1,SphereSpawn,transform.rotation);
-                print("location------------"+xSpawn+" "+zSpawn);
+            if (str == 1)
+            {
+                Instantiate(Sphere1, SphereSpawn, transform.rotation);
+                print("location------------" + xSpawn + " " + zSpawn);
             }
-            else if (str==2){
-                Instantiate(Sphere2,SphereSpawn,transform.rotation);
-                print("location------------"+xSpawn+" "+zSpawn);
+            else if (str == 2)
+            {
+                Instantiate(Sphere2, SphereSpawn, transform.rotation);
+                print("location------------" + xSpawn + " " + zSpawn);
             }
-            else if(str==3){
-                Instantiate(Sphere3,SphereSpawn,transform.rotation);
-                print("location------------"+xSpawn+" "+zSpawn);
+            else if (str == 3)
+            {
+                Instantiate(Sphere3, SphereSpawn, transform.rotation);
+                print("location------------" + xSpawn + " " + zSpawn);
             }
-            else if(str==4){
-                Instantiate(Sphere4,SphereSpawn,transform.rotation);
-                print("location------------"+xSpawn+" "+zSpawn);
+            else if (str == 4)
+            {
+                Instantiate(Sphere4, SphereSpawn, transform.rotation);
+                print("location------------" + xSpawn + " " + zSpawn);
             }
             list.Remove(str);
 
@@ -209,45 +213,54 @@ public class GenerateObstacle : MonoBehaviour
 
             // checkObstacle();
 
-            
+
             // obstacleSpawn = new Vector3(xSpawn, -2f, zSpawn);
             // Instantiate(obstacle, obstacleSpawn, transform.rotation);
         }
 
 
     }
-    private void onCollisionEnter(Collider other){
-        if(other.gameObject.tag=="Sphere1"&&fireElem=true){
-            score+=10;
-            print("Score--------"+score);
+    private void onCollisionEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Sphere1" && fireElem)
+        {
+            score += 10;
+            print("Score--------" + score);
         }
-        else{
-            playerhealth-=10;
-            print("health--------"+playerhealth);
+        else
+        {
+            playerhealth -= 10;
+            print("health--------" + playerhealth);
         }
-        if(other.gameObject.tag=="Sphere2"&&waterElem=true){
-            score+=10;
-            print("Score--------"+score);
+        if (other.gameObject.tag == "Sphere2" && waterElem)
+        {
+            score += 10;
+            print("Score--------" + score);
         }
-        else{
-            playerhealth-=10;
-            print("health--------"+playerhealth);
+        else
+        {
+            playerhealth -= 10;
+            print("health--------" + playerhealth);
         }
-        if(other.gameObject.tag=="Sphere3"&&earthElem=true){
-            score+=10;
-            print("Score--------"+score);
+        if (other.gameObject.tag == "Sphere3" && earthElem)
+        {
+            score += 10;
+            print("Score--------" + score);
         }
-        else{
-            playerhealth-=10;
-            print("health--------"+playerhealth);
+        else
+        {
+            playerhealth -= 10;
+            print("health--------" + playerhealth);
         }
-        if(other.gameObject.tag=="Sphere4"&&airElem=true){
-            score+=10;
-            print("Score--------"+score);
+        if (other.gameObject.tag == "Sphere4" && airElem)
+        {
+            score += 10;
+            print("Score--------" + score);
         }
-        else{
-            playerhealth-=10;
-            print("health--------"+playerhealth);
+        else
+        {
+            playerhealth -= 10;
+            print("health--------" + playerhealth);
         }
     }
 
