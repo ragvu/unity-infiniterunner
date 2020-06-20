@@ -180,7 +180,7 @@ public class GenerateObstacle : MonoBehaviour
         var list = new List<int> { 1, 2, 3, 4 };
         for (var i = 0; i < 4; i++)
         {
-            zSpawn = this.transform.position.z + 100;
+            zSpawn = this.transform.position.z + 75;
             xSpawn = xSpawnA[i];
             SphereSpawn = new Vector3(xSpawn, 0f, zSpawn);
 
@@ -237,7 +237,7 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 100;
+        zSpawn = this.transform.position.z + 75;
         SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
 
 
@@ -285,7 +285,7 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 100;
+        zSpawn = this.transform.position.z + 75;
         SphereSpawn = new Vector3(xCenter, 10f, zSpawn);
 
 
@@ -334,7 +334,7 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 100;
+        zSpawn = this.transform.position.z + 75;
         int spawnLocation = Random.Range(1,3);
         if (spawnLocation == 1)
         {
@@ -392,7 +392,7 @@ public class GenerateObstacle : MonoBehaviour
         var list = new List<int> { 1, 2, 3, 4 };
         for (var i = 0; i < 4; i++)
         {
-            zSpawn = this.transform.position.z + 100;
+            zSpawn = this.transform.position.z + 75;
             xSpawn = xSpawnA[i];
             SphereSpawn = new Vector3(xSpawn, 0f, zSpawn);
 
@@ -431,25 +431,26 @@ public class GenerateObstacle : MonoBehaviour
     }
     public void SpawnObstacle()
     {
-        obstacleNumber = Random.Range(1, 6);
+        obstacleNumber = Random.Range(1, 40);
         //obstacleNumber = 5;
-        if (obstacleNumber == 1)
+        if (obstacleNumber >=1 && obstacleNumber <= 16)
         {
             fourLanes();
         }
-        else if (obstacleNumber == 2)
+        else if (obstacleNumber >=17&&obstacleNumber<=22)
         {
             groundObstacle();
         }
-        else if (obstacleNumber == 3)
+        else if (obstacleNumber >=23 && obstacleNumber<=28)
         {
             airObstacle();
+            
         }
-        else if (obstacleNumber == 4)
+        else if (obstacleNumber >=29&&obstacleNumber<=34)
         {
             movingObstacle();
         }
-        else if (obstacleNumber == 5)
+        else if (obstacleNumber >= 35&&obstacleNumber<=40)
         {
             threelane();
         }
