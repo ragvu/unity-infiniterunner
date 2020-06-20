@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Floor
+  - Sphere1
+  - Sphere2
+  - Sphere3
+  - Sphere4
+  - Ground1
+  - Ground2
+  - Ground3
+  - Ground4
   layers:
   - Default
   - TransparentFX

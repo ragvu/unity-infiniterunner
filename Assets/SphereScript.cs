@@ -19,7 +19,7 @@ public class SphereScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (other.gameObject.tag == "Sphere1")
+            if (this.gameObject.tag == "Sphere1")
             {
                 print("Score--------");
             }
@@ -27,7 +27,7 @@ public class SphereScript : MonoBehaviour
             {
                 print("health--------");
             }
-            if (other.gameObject.tag == "Sphere2")
+            if (this.gameObject.tag == "Sphere2")
             {
                 print("Score--------");
             }
@@ -35,7 +35,7 @@ public class SphereScript : MonoBehaviour
             {
                 print("health--------");
             }
-            if (other.gameObject.tag == "Sphere3")
+            if (this.gameObject.tag == "Sphere3")
             {
                 print("Score--------");
             }
@@ -43,7 +43,7 @@ public class SphereScript : MonoBehaviour
             {
                 print("health--------");
             }
-            if (other.gameObject.tag == "Sphere4")
+            if (this.gameObject.tag == "Sphere4")
             {
                 print("Score--------");
             }
