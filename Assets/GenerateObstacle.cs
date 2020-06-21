@@ -37,6 +37,7 @@ public class GenerateObstacle : MonoBehaviour
     // private int obstacleType;
     private Vector3 obstacleSpawn;
     private Vector3 SphereSpawn;
+    private Vector3 AirSphereSpawn;
     // Start is called before the first frame update
     public bool fireObstacleSet = false;
     public bool waterObstacleSet = false;
@@ -264,7 +265,158 @@ public class GenerateObstacle : MonoBehaviour
         // generateObstacle();
         int randz = Random.Range(50, 200);
     }
+    public void groundThenAirObstacle(){
+    if (playerElement == 1)
+        {
+            fireElem = true;
+        }
+        else if (playerElement == 2)
+        {
+            waterElem = true;
+        }
+        else if (playerElement == 3)
+        {
+            earthElem = true;
+        }
+        else if (playerElement == 4)
+        {
+            airElem = true;
+        }
 
+        var list = new List<int> { 1, 2, 3, 4 };
+        zSpawn = this.transform.position.z + 75;
+        SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
+        int index = Random.Range(0, list.Count);
+        int str=list[index];
+
+        
+        if (str == 1)
+        {
+            Instantiate(Ground1, SphereSpawn, transform.rotation);
+        }
+        else if (str == 2)
+        {
+            Instantiate(Ground2, SphereSpawn, transform.rotation);
+        }
+        else if (str == 3)
+        {
+            Instantiate(Ground3, SphereSpawn, transform.rotation);
+        }
+        else if (str == 4)
+        {
+            Instantiate(Ground4, SphereSpawn, transform.rotation);
+        }
+        list.Remove(str);
+
+        // generateObstacle();
+
+
+        var airList = new List<int> { 1, 2, 3, 4 };
+        zSpawn = this.transform.position.z + 100;
+        AirSphereSpawn = new Vector3(xCenter, 10f, zSpawn);
+
+
+        int airIndex = Random.Range(0, list.Count);
+        int airStr = airList[airIndex];
+        
+        if (airStr == 1)
+        {
+            Instantiate(Air1, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 2)
+        {
+            Instantiate(Air2, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 3)
+        {
+            Instantiate(Air3, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 4)
+        {
+            Instantiate(Air4, AirSphereSpawn, transform.rotation);
+        }
+        list.Remove(airStr);
+
+        // generateObstacle();
+        int randz = Random.Range(50, 200);
+
+    }
+    public void airThenGroundObstacle(){
+    if (playerElement == 1)
+        {
+            fireElem = true;
+        }
+        else if (playerElement == 2)
+        {
+            waterElem = true;
+        }
+        else if (playerElement == 3)
+        {
+            earthElem = true;
+        }
+        else if (playerElement == 4)
+        {
+            airElem = true;
+        }
+
+        var list = new List<int> { 1, 2, 3, 4 };
+        zSpawn = this.transform.position.z + 100;
+        SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
+        int index = Random.Range(0, list.Count);
+        int str=list[index];
+
+        
+        if (str == 1)
+        {
+            Instantiate(Ground1, SphereSpawn, transform.rotation);
+        }
+        else if (str == 2)
+        {
+            Instantiate(Ground2, SphereSpawn, transform.rotation);
+        }
+        else if (str == 3)
+        {
+            Instantiate(Ground3, SphereSpawn, transform.rotation);
+        }
+        else if (str == 4)
+        {
+            Instantiate(Ground4, SphereSpawn, transform.rotation);
+        }
+        list.Remove(str);
+
+        // generateObstacle();
+
+
+        var airList = new List<int> { 1, 2, 3, 4 };
+        zSpawn = this.transform.position.z + 75;
+        AirSphereSpawn = new Vector3(xCenter, 10f, zSpawn);
+
+
+        int airIndex = Random.Range(0, list.Count);
+        int airStr = airList[airIndex];
+        
+        if (airStr == 1)
+        {
+            Instantiate(Air1, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 2)
+        {
+            Instantiate(Air2, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 3)
+        {
+            Instantiate(Air3, AirSphereSpawn, transform.rotation);
+        }
+        else if (airStr == 4)
+        {
+            Instantiate(Air4, AirSphereSpawn, transform.rotation);
+        }
+        list.Remove(airStr);
+
+        // generateObstacle();
+        int randz = Random.Range(50, 200);
+
+    }
     public void airObstacle(){
 
         if (playerElement == 1)
@@ -432,27 +584,32 @@ public class GenerateObstacle : MonoBehaviour
     public void SpawnObstacle()
     {
         obstacleNumber = Random.Range(1, 40);
-        //obstacleNumber = 5;
-        if (obstacleNumber >=1 && obstacleNumber <= 8)
+        if (obstacleNumber >=1 && obstacleNumber <= 10)
         {
             fourLanes();
         }
-        else if (obstacleNumber >=9&&obstacleNumber<=18)
+        else if (obstacleNumber >=11&&obstacleNumber<=14)
         {
             groundObstacle();
         }
-        else if (obstacleNumber >=19 && obstacleNumber<=25)
+        else if (obstacleNumber >=15 && obstacleNumber<=18)
         {
             airObstacle();
             
         }
-        else if (obstacleNumber >=26&&obstacleNumber<=31)
+        else if (obstacleNumber >=19&&obstacleNumber<=25)
         {
             movingObstacle();
         }
-        else if (obstacleNumber >= 32&&obstacleNumber<=40)
+        else if (obstacleNumber >= 26&&obstacleNumber<=29)
         {
+            airThenGroundObstacle();
+        }
+        else if(obstacleNumber>=30&&obstacleNumber<=36){
             threelane();
+        }
+        else if(obstacleNumber>=37&&obstacleNumber<=40){
+            groundThenAirObstacle();
         }
     }
 }
