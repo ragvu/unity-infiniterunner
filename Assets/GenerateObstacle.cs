@@ -433,24 +433,24 @@ public class GenerateObstacle : MonoBehaviour
     {
         obstacleNumber = Random.Range(1, 40);
         //obstacleNumber = 5;
-        if (obstacleNumber >=1 && obstacleNumber <= 16)
+        if (obstacleNumber >=1 && obstacleNumber <= 8)
         {
             fourLanes();
         }
-        else if (obstacleNumber >=17&&obstacleNumber<=22)
+        else if (obstacleNumber >=9&&obstacleNumber<=18)
         {
             groundObstacle();
         }
-        else if (obstacleNumber >=23 && obstacleNumber<=28)
+        else if (obstacleNumber >=19 && obstacleNumber<=25)
         {
             airObstacle();
             
         }
-        else if (obstacleNumber >=29&&obstacleNumber<=34)
+        else if (obstacleNumber >=26&&obstacleNumber<=31)
         {
             movingObstacle();
         }
-        else if (obstacleNumber >= 35&&obstacleNumber<=40)
+        else if (obstacleNumber >= 32&&obstacleNumber<=40)
         {
             threelane();
         }

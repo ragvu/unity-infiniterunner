@@ -33,7 +33,6 @@ public class MovingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(transform.position);
         if (transform.position.x <= leftBound)
         {
             //transform.position += Vector3.right * speed * Time.deltaTime;

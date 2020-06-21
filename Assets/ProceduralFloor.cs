@@ -13,7 +13,8 @@ public class ProceduralFloor : MonoBehaviour
     public int floorID = 1;
     public GameObject playerLocal;
     public GenerateObstacle generateObstacleScript;
-    private int collisionCounter = 0;
+    private int collisionCounter;
+    private bool collision;
 
     // Start is called before the first frame update
 
@@ -25,6 +26,8 @@ public class ProceduralFloor : MonoBehaviour
 
         anchorPoint = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 50f);
         anchorPoint2 = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 250f);
+
+        collisionCounter = 0;
 
 
     }
@@ -42,31 +45,37 @@ public class ProceduralFloor : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (collisionCounter == 0)
+            if (collision == false)
             {
-                floorInstance = Instantiate(floor, anchorPoint2, floor.transform.rotation);
-                generateObstacleScript.SpawnObstacle();
-                collisionCounter++;
+                print("collided");
+                if (collisionCounter == 0)
+                {
+                    floorInstance = Instantiate(floor, anchorPoint2, floor.transform.rotation);
+                    generateObstacleScript.SpawnObstacle();
+                    collisionCounter++;
+                    collision = true;
+
+                }
+
+                else if (collisionCounter == 1)
+                {
+                    generateObstacleScript.SpawnObstacle();
+                    collision = true;
+                }
+
+                else if (collisionCounter == 2)
+                {
+                    generateObstacleScript.SpawnObstacle();
+                    collision = true;
+                }
             }
-            
-            else if (collisionCounter == 1){
-                // floorInstance = Instantiate(floor, anchorPoint2, floor.transform.rotation);
-                // generateObstacleScript.SpawnObstacle();
-            }
-            
-            
-            
-            
-            
-            // floorID++;
-            // floorInstance.gameObject.name = floorID.ToString();
-            // if (floorID != 1)
-            // {
-            //     int previousTag = floorID - 1;
-            //     previousFloor = GameObject.Find(previousTag.ToString());
-            //     Destroy(previousFloor.gameObject);
-            // }
+
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        collision = false;
     }
 }
 

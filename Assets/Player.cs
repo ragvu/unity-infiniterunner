@@ -44,10 +44,11 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown("left") && middle1TF && isGrounded)
         {
-            //transform.position = Vector3.MoveTowards(transform.position, left, 20 * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, left, 1);
             transform.Translate(left);
             leftTF = true;
             middle1TF = false;
+
         }
         else if (Input.GetKeyDown("right") && middle2TF && isGrounded)
         {
@@ -70,7 +71,7 @@ public class Player : MonoBehaviour
         }
         else if (Input.GetKeyDown("left") && rightTF && isGrounded)
         {
-            
+
             transform.Translate(left);
             rightTF = false;
             middle2TF = true;
@@ -86,13 +87,16 @@ public class Player : MonoBehaviour
             middle1TF = true;
         }
 
-        if (Input.GetKeyDown("space") && isGrounded)
+        else if (Input.GetKeyDown("space") && isGrounded)
         {
             print("jump");
             playerLocal.AddForce(jump * jumpForce, ForceMode.Impulse);
             isGrounded = false;
         }
-
+        // else 
+        // {
+        //     transform.Translate(move * Time.deltaTime * 20);
+        // }
     }
 
     void DamagePlayer()
