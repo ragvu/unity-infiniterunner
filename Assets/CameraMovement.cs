@@ -8,7 +8,6 @@ public class CameraMovement : MonoBehaviour
     private Vector3 move;
     public GameObject playerLocal;
     private Player playerScript;
-    private int distance = 10;
     private float cameraX;
     // Start is called before the first frame update
     void Start()
