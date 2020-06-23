@@ -18,7 +18,9 @@ public class ElementSwitcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.gameObject.tag=="Player"){
         GenerateObstacle.playerElement = Random.Range(1, 5);
         print(GenerateObstacle.playerElement);
+        }
     }
 }

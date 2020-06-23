@@ -27,12 +27,13 @@ public class GenerateObstacle : MonoBehaviour
     public Rigidbody obstacle;
     private DamagePickup obstacleScript;
     public float zSpawn;
+    public float airzSpawn;
     public float[] xSpawnA;
     private float xCenter;
     private float xSpawn;
-    private int playerhealth;
+    public static float playerhealth;
     private int obstacleNumber;
-    private int score;
+    public static float playerscore;
     private int typeOfObstacle;
     // private int obstacleType;
     private Vector3 obstacleSpawn;
@@ -43,23 +44,30 @@ public class GenerateObstacle : MonoBehaviour
     public bool waterObstacleSet = false;
     public bool earthObstacleSet = false;
     private bool airObstacleSet = false;
-    public bool fireElem = false;
-    public bool waterElem = false;
-    public bool earthElem = false;
-    public bool airElem = false;
+    public GeneratePowerUps powerUpScript;
+    public CoinScript coinScript;
+    public static bool fireElem = false;
+    public static bool waterElem = false;
+    public static bool earthElem = false;
+    public static bool airElem = false;
     void Start()
     {
-        playerElement = 1;
-        
+        playerhealth=3f;
+        playerLocal = GameObject.Find("Player");
+        playerElement = Random.Range(1,4);
+        powerUpScript = playerLocal.GetComponent<GeneratePowerUps>();
+        coinScript = playerLocal.GetComponent<CoinScript>();
         obstacleLocal = GameObject.Find("Obstacle");
         xCenter = this.transform.transform.position.x + 1.5f;
         xSpawnA = new float[] { xCenter - 4.5f, xCenter - 1.5f, xCenter + 1.5f, xCenter + 4.5f };
+        StartCoroutine("DoCheck");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void generateObstacle()
@@ -82,7 +90,6 @@ public class GenerateObstacle : MonoBehaviour
         {
             if (!fireObstacleSet)
             {
-                print("red");
                 fireObstacleSet = true;
             }
             else
@@ -95,7 +102,6 @@ public class GenerateObstacle : MonoBehaviour
         {
             if (!waterObstacleSet)
             {
-                print("blue");
                 waterObstacleSet = true;
             }
             else
@@ -108,7 +114,6 @@ public class GenerateObstacle : MonoBehaviour
         {
             if (!earthObstacleSet)
             {
-                print("green");
                 earthObstacleSet = true;
             }
             else
@@ -121,7 +126,6 @@ public class GenerateObstacle : MonoBehaviour
         {
             if (!airObstacleSet)
             {
-                print("white");
                 airObstacleSet = true;
             }
             else
@@ -159,6 +163,14 @@ public class GenerateObstacle : MonoBehaviour
         // }
 
     }
+     IEnumerator DoCheck() {
+     for(;;) {
+         // execute block of code here
+         yield return new WaitForSeconds(5f);
+         playerscore+=25;
+         print(playerscore);
+     }
+ }
     public void fourLanes()
     {
         if (playerElement == 1)
@@ -181,14 +193,14 @@ public class GenerateObstacle : MonoBehaviour
         var list = new List<int> { 1, 2, 3, 4 };
         for (var i = 0; i < 4; i++)
         {
-            zSpawn = this.transform.position.z + 75;
+            zSpawn = this.transform.position.z + 200;
             xSpawn = xSpawnA[i];
             SphereSpawn = new Vector3(xSpawn, 0f, zSpawn);
 
 
             int index = Random.Range(0, list.Count);
             int str = list[index];
-            print("------------" + str);
+            
             if (str == 1)
             {
                 Instantiate(Sphere1, SphereSpawn, transform.rotation);
@@ -238,12 +250,13 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 75;
+        zSpawn = this.transform.position.z + 200;
         SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
 
 
         int index = Random.Range(0, list.Count);
         int str = list[index];
+        if(playerElement!=str){
         if (str == 1)
         {
             Instantiate(Ground1, SphereSpawn, transform.rotation);
@@ -261,6 +274,11 @@ public class GenerateObstacle : MonoBehaviour
             Instantiate(Ground4, SphereSpawn, transform.rotation);
         }
         list.Remove(str);
+        }
+        else if(playerElement==str){
+            list.Remove(str);
+            repeatObstacle();
+        }
 
         // generateObstacle();
         int randz = Random.Range(50, 200);
@@ -284,58 +302,42 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 75;
+        zSpawn = this.transform.position.z + 200;
         SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
+        airzSpawn = this.transform.position.z + 225;
+        AirSphereSpawn = new Vector3(xCenter, 10f, airzSpawn);
         int index = Random.Range(0, list.Count);
         int str=list[index];
 
-        
+        if(playerElement!=str){
         if (str == 1)
         {
             Instantiate(Ground1, SphereSpawn, transform.rotation);
+            Instantiate(Air1, AirSphereSpawn, transform.rotation);
         }
         else if (str == 2)
         {
             Instantiate(Ground2, SphereSpawn, transform.rotation);
+            Instantiate(Air2, AirSphereSpawn, transform.rotation);
         }
         else if (str == 3)
         {
             Instantiate(Ground3, SphereSpawn, transform.rotation);
+            Instantiate(Air3, AirSphereSpawn, transform.rotation);
         }
         else if (str == 4)
         {
             Instantiate(Ground4, SphereSpawn, transform.rotation);
-        }
-        list.Remove(str);
-
-        // generateObstacle();
-
-
-        var airList = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 100;
-        AirSphereSpawn = new Vector3(xCenter, 10f, zSpawn);
-
-
-        int airIndex = Random.Range(0, list.Count);
-        int airStr = airList[airIndex];
-        
-        if (airStr == 1)
-        {
-            Instantiate(Air1, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 2)
-        {
-            Instantiate(Air2, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 3)
-        {
-            Instantiate(Air3, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 4)
-        {
             Instantiate(Air4, AirSphereSpawn, transform.rotation);
         }
-        list.Remove(airStr);
+        list.Remove(str);
+        }
+        else if(playerElement==str){
+            list.Remove(str);
+            repeatObstacle();
+        }
+
+        // generateObstacle();
 
         // generateObstacle();
         int randz = Random.Range(50, 200);
@@ -360,65 +362,49 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 100;
+        zSpawn = this.transform.position.z + 225;
         SphereSpawn = new Vector3(xCenter, -2f, zSpawn);
+        airzSpawn = this.transform.position.z + 200;
+        AirSphereSpawn = new Vector3(xCenter, 10f, airzSpawn);
         int index = Random.Range(0, list.Count);
         int str=list[index];
 
-        
+        if(playerElement!=str){
         if (str == 1)
         {
             Instantiate(Ground1, SphereSpawn, transform.rotation);
+            Instantiate(Air1, AirSphereSpawn, transform.rotation);
         }
         else if (str == 2)
         {
             Instantiate(Ground2, SphereSpawn, transform.rotation);
+            Instantiate(Air2, AirSphereSpawn, transform.rotation);
         }
         else if (str == 3)
         {
             Instantiate(Ground3, SphereSpawn, transform.rotation);
+            Instantiate(Air3, AirSphereSpawn, transform.rotation);
         }
         else if (str == 4)
         {
             Instantiate(Ground4, SphereSpawn, transform.rotation);
-        }
-        list.Remove(str);
-
-        // generateObstacle();
-
-
-        var airList = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 75;
-        AirSphereSpawn = new Vector3(xCenter, 10f, zSpawn);
-
-
-        int airIndex = Random.Range(0, list.Count);
-        int airStr = airList[airIndex];
-        
-        if (airStr == 1)
-        {
-            Instantiate(Air1, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 2)
-        {
-            Instantiate(Air2, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 3)
-        {
-            Instantiate(Air3, AirSphereSpawn, transform.rotation);
-        }
-        else if (airStr == 4)
-        {
             Instantiate(Air4, AirSphereSpawn, transform.rotation);
         }
-        list.Remove(airStr);
+        list.Remove(str);
+        }
+        else if(playerElement==str){
+            list.Remove(str);
+            repeatObstacle();
+        }
+
+        // generateObstacle();
 
         // generateObstacle();
         int randz = Random.Range(50, 200);
 
     }
     public void airObstacle(){
-
+        
         if (playerElement == 1)
         {
             fireElem = true;
@@ -437,13 +423,14 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 75;
-        SphereSpawn = new Vector3(xCenter, 10f, zSpawn);
+        zSpawn = this.transform.position.z + 200;
+
+        SphereSpawn = new Vector3(xCenter+5, 0f, zSpawn);
 
 
         int index = Random.Range(0, list.Count);
         int str = list[index];
-        
+        if(playerElement!=str){
         if (str == 1)
         {
             Instantiate(Air1, SphereSpawn, transform.rotation);
@@ -461,6 +448,12 @@ public class GenerateObstacle : MonoBehaviour
             Instantiate(Air4, SphereSpawn, transform.rotation);
         }
         list.Remove(str);
+        }
+        else if (playerElement == str)
+            {
+                list.Remove(str);
+                repeatObstacle();
+            }
 
         // generateObstacle();
         int randz = Random.Range(50, 200);
@@ -486,7 +479,7 @@ public class GenerateObstacle : MonoBehaviour
         }
 
         var list = new List<int> { 1, 2, 3, 4 };
-        zSpawn = this.transform.position.z + 75;
+        zSpawn = this.transform.position.z + 200;
         int spawnLocation = Random.Range(1,3);
         if (spawnLocation == 1)
         {
@@ -499,7 +492,7 @@ public class GenerateObstacle : MonoBehaviour
 
         int index = Random.Range(0, list.Count);
         int str = list[index];
-        
+        if(playerElement!=str){
         if (str == 1)
         {
             Instantiate(Move1, SphereSpawn, transform.rotation);
@@ -517,6 +510,13 @@ public class GenerateObstacle : MonoBehaviour
             Instantiate(Move4, SphereSpawn, transform.rotation);
         }
         list.Remove(str);
+        }
+        else if (playerElement == str)
+            {
+                list.Remove(str);
+                repeatObstacle();
+            }
+        
 
         // generateObstacle();
         int randz = Random.Range(50, 200);
@@ -544,7 +544,7 @@ public class GenerateObstacle : MonoBehaviour
         var list = new List<int> { 1, 2, 3, 4 };
         for (var i = 0; i < 4; i++)
         {
-            zSpawn = this.transform.position.z + 75;
+            zSpawn = this.transform.position.z + 200;
             xSpawn = xSpawnA[i];
             SphereSpawn = new Vector3(xSpawn, 0f, zSpawn);
 
@@ -583,7 +583,9 @@ public class GenerateObstacle : MonoBehaviour
     }
     public void SpawnObstacle()
     {
-        obstacleNumber = Random.Range(1, 40);
+        coinScript.CreateCoins();
+        obstacleNumber = Random.Range(0, 45);
+        
         if (obstacleNumber >=1 && obstacleNumber <= 10)
         {
             fourLanes();
@@ -605,11 +607,47 @@ public class GenerateObstacle : MonoBehaviour
         {
             airThenGroundObstacle();
         }
-        else if(obstacleNumber>=30&&obstacleNumber<=36){
+        if(obstacleNumber>=30&&obstacleNumber<=35){
             threelane();
         }
-        else if(obstacleNumber>=37&&obstacleNumber<=40){
+        else if(obstacleNumber>=36&&obstacleNumber<=40){
             groundThenAirObstacle();
+        }
+        else if(obstacleNumber>=41&&obstacleNumber<=45){
+            powerUpScript.CreatePowerups();
+        }
+    }
+    public void repeatObstacle(){
+        obstacleNumber = Random.Range(0, 45);
+        if (obstacleNumber >=1 && obstacleNumber <= 10)
+        {
+            fourLanes();
+        }
+        else if (obstacleNumber >=11&&obstacleNumber<=14)
+        {
+            groundObstacle();
+        }
+        else if (obstacleNumber >=15 && obstacleNumber<=18)
+        {
+            airObstacle();
+            
+        }
+        else if (obstacleNumber >=19&&obstacleNumber<=25)
+        {
+            movingObstacle();
+        }
+        else if (obstacleNumber >= 26&&obstacleNumber<=29)
+        {
+            airThenGroundObstacle();
+        }
+        if(obstacleNumber>=30&&obstacleNumber<=35){
+            threelane();
+        }
+        else if(obstacleNumber>=36&&obstacleNumber<=40){
+            groundThenAirObstacle();
+        }
+        else if(obstacleNumber>=41&&obstacleNumber<=45){
+            powerUpScript.CreatePowerups();
         }
     }
 }

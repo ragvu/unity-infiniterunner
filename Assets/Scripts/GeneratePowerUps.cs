@@ -26,14 +26,9 @@ public class GeneratePowerUps : MonoBehaviour
 
     public void CreatePowerups()
     {
-        zSpawn = this.transform.position.z + 85;
+        zSpawn = this.transform.position.z + 200;
         xSpawn = xSpawnA[Random.Range(1,4)];
         powerUpSpawn = new Vector3(xSpawn, 0f, zSpawn);
-
-        int i = Random.Range(1,3);
-        if (i==1)
-        {
-            Instantiate(ElementSwitcher, powerUpSpawn, transform.rotation);
-        }
+        Instantiate(ElementSwitcher, powerUpSpawn, transform.rotation);
     }
 }

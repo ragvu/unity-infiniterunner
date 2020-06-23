@@ -15,7 +15,6 @@ public class ProceduralFloor : MonoBehaviour
     public GenerateObstacle generateObstacleScript;
     private int collisionCounter;
     private bool collision;
-    public GeneratePowerUps powerUpScript;
 
     // Start is called before the first frame update
 
@@ -24,7 +23,7 @@ public class ProceduralFloor : MonoBehaviour
         //print("Start method Called " + this.GetHashCode());
         playerLocal = GameObject.Find("Player");
         generateObstacleScript = playerLocal.GetComponent<GenerateObstacle>();
-        powerUpScript = playerLocal.GetComponent<GeneratePowerUps>();
+        
 
         anchorPoint = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 50f);
         anchorPoint2 = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + 250f);
@@ -49,7 +48,6 @@ public class ProceduralFloor : MonoBehaviour
         {
             if (collision == false)
             {
-                PowerupChance();
                 if (collisionCounter == 0)
                 {
                     floorInstance = Instantiate(floor, anchorPoint2, floor.transform.rotation);
@@ -81,13 +79,6 @@ public class ProceduralFloor : MonoBehaviour
         collision = false;
     }
 
-    public void PowerupChance()
-    {
-        int i = Random.Range(1,2);
-        if (i==1)
-        {
-            powerUpScript.CreatePowerups();
-        }
-    }
+
 }
 
