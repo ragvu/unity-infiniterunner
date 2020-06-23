@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SphereScript : MonoBehaviour
 {
+    private bool collision;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,40 +18,64 @@ public class SphereScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if(collision==false){
         if (other.gameObject.tag == "Player")
         {
-            if (this.gameObject.tag == "Sphere1")
+            if (this.gameObject.tag == "Sphere1" && GenerateObstacle.fireElem!=true)
             {
-                print("Score--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health--------"+GenerateObstacle.playerhealth);
+                collision=true;
+                
             }
-            else
+            // else if (this.gameObject.tag == "Sphere1" && GenerateObstacle.fireElem==true)
+            // {
+            //     GenerateObstacle.playerscore++;
+            //     print("score--------"+GenerateObstacle.playerscore);
+                
+            // }
+            else if (this.gameObject.tag == "Sphere2" && GenerateObstacle.waterElem!=true)
             {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health--------"+GenerateObstacle.playerhealth);
+                collision=true;
             }
-            if (this.gameObject.tag == "Sphere2")
+            // else if (this.gameObject.tag == "Sphere2" && GenerateObstacle.waterElem==true)
+            // {
+            //     GenerateObstacle.playerscore++;
+            //     print("score--------"+GenerateObstacle.playerscore);
+                
+            // }
+            else if (this.gameObject.tag == "Sphere3" && GenerateObstacle.earthElem!=true)
             {
-                print("Score--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health--------"+GenerateObstacle.playerhealth);
+                collision=true;
+                
             }
-            else
+            // else if (this.gameObject.tag == "Sphere3" && GenerateObstacle.earthElem==true)
+            // {
+            //     GenerateObstacle.playerscore++;
+            //     print("score--------"+GenerateObstacle.playerscore);
+                
+            // }
+            else if (this.gameObject.tag == "Sphere4" && GenerateObstacle.airElem!=true)
             {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1 ;
+                print("health--------"+GenerateObstacle.playerhealth);
+                collision=true;
+                
             }
-            if (this.gameObject.tag == "Sphere3")
-            {
-                print("Score--------");
-            }
-            else
-            {
-                print("health--------");
-            }
-            if (this.gameObject.tag == "Sphere4")
-            {
-                print("Score--------");
-            }
-            else
-            {
-                print("health--------");
-            }
+            // else if (this.gameObject.tag == "Sphere4" && GenerateObstacle.airElem==true)
+            // {
+            //     GenerateObstacle.playerscore++;
+            //     print("score--------"+GenerateObstacle.playerscore);
+                
+            // }
         }
+    }
+    }
+    private void OnTriggerExit(Collider other){
+        collision = false;
     }
 }

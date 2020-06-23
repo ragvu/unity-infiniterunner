@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GroundObstacle : MonoBehaviour
 {
+    private bool collision;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,40 +19,38 @@ public class GroundObstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(collision==false){
         if (other.gameObject.tag == "Player")
         {
             if (this.gameObject.tag == "Ground1")
             {
-                print("GROUND");
-            }
-            else
-            {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health " + GenerateObstacle.playerhealth);
+                collision=true;
             }
             if (this.gameObject.tag == "Ground2")
             {
-                print("GROUND");
-            }
-            else
-            {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health " + GenerateObstacle.playerhealth);
+                collision=true;
             }
             if (this.gameObject.tag == "Ground3")
             {
-                print("GROUND");
-            }
-            else
-            {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health " + GenerateObstacle.playerhealth);
+                collision=true;
             }
             if (this.gameObject.tag == "Ground4")
             {
-                print("GROUND");
-            }
-            else
-            {
-                print("health--------");
+                GenerateObstacle.playerhealth=GenerateObstacle.playerhealth-1;
+                print("health " + GenerateObstacle.playerhealth);
+                collision=true;
             }
         }
+        }
+        
+    }
+    private void OnTriggerExit(Collider other){
+        collision=false;
     }
 }
