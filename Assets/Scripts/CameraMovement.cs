@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject camera;
+    public static GameObject camera;
     private Vector3 move;
     public GameObject playerLocal;
     private Player playerScript;
