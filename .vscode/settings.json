@@ -1,7 +1,7 @@
 ﻿{
     "files.exclude":
     {
-        "**/.DS_Store":true,
+        "**/.DS_Store":false,
         "**/.git":true,
         "**/.gitignore":true,
         "**/.gitmodules":true,
